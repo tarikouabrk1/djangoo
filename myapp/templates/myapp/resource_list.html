@@ -1,0 +1,14 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<h2>All Resources</h2>
+<ul>
+    {% for resource in resources %}
+    <li>
+        <a href="{% url 'resource_detail' resource.pk %}">{{ resource.title }}</a>
+        ({{ resource.get_resource_type_display }})
+    </li>
+    {% empty %}
+    <li>No resources yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

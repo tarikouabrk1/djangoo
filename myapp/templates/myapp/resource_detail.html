@@ -1,0 +1,19 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<h2>{{ resource.title }}</h2>
+<p>{{ resource.description }}</p>
+
+{% if resource.resource_type == 'pdf' %}
+    <iframe src="{{ resource.file.url }}" width="600" height="400"></iframe>
+{% elif resource.resource_type == 'latex' %}
+    <div>
+        $$ {{ resource.file.read|safe }} $$
+    </div>
+{% elif resource.resource_type == 'code' %}
+    <pre><code class="language-python">{{ resource.file.read|safe }}</code></pre>
+{% else %}
+    <a href="{{ resource.file.url }}" download>Download</a>
+{% endif %}
+
+<a href="{% url 'resource_list' %}">Back to list</a>
+{% endblock %}

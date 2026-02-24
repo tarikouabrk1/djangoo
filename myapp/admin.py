@@ -1,5 +1,7 @@
 from django.contrib import admin
+from .models import Resource
 
-from .models import Article
-
-admin.site.register(Article)
+@admin.register(Resource)
+class ResourceAdmin(admin.ModelAdmin):
+    list_display = ('title', 'resource_type', 'uploaded_at')
+    list_filter = ('resource_type',)

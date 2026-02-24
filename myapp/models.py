@@ -1,16 +1,20 @@
 from django.db import models
-from django.core.validators import MinValueValidator,MaxValueValidator
 
+class Resource(models.Model):
+    RESOURCE_TYPE = [
+        ('code', 'Code'),
+        ('problem', 'Problem Set'),
+        ('pdf', 'PDF'),
+        ('latex', 'LaTeX'),
+    ]
 
-class Article(models.Model):
-    name=models.CharField(max_length=100)
-    prix=models.DecimalField(max_digits=7,decimal_places=2)
-    slug=models.SlugField(unique=True)
-    date_de_publication=models.DateTimeField(auto_now_add=True)
-    reduction=models.FloatField(
-        default=0,
-        validators=[MinValueValidator(0),MaxValueValidator(100)]
-    )
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    file = models.FileField(upload_to='resources/')
+    resource_type = models.CharField(max_length=10, choices=RESOURCE_TYPE)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.title
+    
+
